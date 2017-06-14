@@ -337,6 +337,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
   private _items:Array<any> = [];
   private _disabled:boolean = false;
   private _active:Array<SelectItem> = [];
+  private tmp: any;
 
   public constructor(element:ElementRef, private sanitizer:DomSanitizer) {
     this.element = element;
@@ -430,6 +431,14 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
       new ChildrenBehavior(this) : new GenericBehavior(this);
   }
 
+  ngOnChanges(change: SimpleChanges) {
+    if (this.tmp && !this.tmp.resolve) {
+      let items = change.items.currentValue
+      let find = change.items.currentValue.filter((d: any) => d.id === this.tmp.id);
+      if (find) this.active = find;
+    }
+  }
+
   public remove(item:SelectItem):void {
     if (this._disabled === true) {
       return;
@@ -454,7 +463,11 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 
     this.onTouched();
     if (type === 'selected' || type === 'removed') {
-      this.onChange(this.active);
+      if (this.multiple) {
+        this.onChange(this.active.map(d => d.id));
+      } else {
+        this.onChange(Number(this.active.map(d => d.id).join()));
+      }
     }
   }
 
@@ -468,8 +481,17 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
   }
 
   public writeValue(val:any):void {
-    this.active = val;
-    this.data.emit(this.active);
+    if (typeof val === "number") {
+      let present = this._items.filter(d => d.id == val);
+      if (present.length >= 1) {
+        this.active = present;
+      } else {
+        this.tmp = {id: val, resolve: false};
+      }
+    } else {
+      this.active = val;
+      this.data.emit(this.active);
+    }
   }
 
   public registerOnChange(fn:(_:any) => {}):void {this.onChange = fn;}
