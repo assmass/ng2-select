@@ -137,7 +137,7 @@ let styles = `
               [innerHTML]="sanitize(active[0].text)"></span>
         <i class="dropdown-toggle pull-right"></i>
         <i class="caret pull-right"></i>
-        <a *ngIf="allowClear && active.length>0" class="btn btn-xs btn-link pull-right" style="margin-right: 10px; padding: 0;" (click)="removeClick(active[0], $event)">
+        <a *ngIf="allowClear && active.length>0" class="btn btn-xs btn-link float-right" style="margin-right: 10px; padding: 0;" (click)="removeClick(active[0], $event)">
            <i class="icon-close"></i>
         </a>
       </span>
