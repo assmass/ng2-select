@@ -9,6 +9,7 @@ import { escapeRegexp } from './common';
 let styles = `
   .ui-select-toggle {
     position: relative;
+      padding: 0.5rem 0.75rem;
   }
 
   /* Fix caret going into new line in Firefox */
@@ -59,7 +60,7 @@ let styles = `
   }
   .ui-select-choices-row>a {
       display: block;
-      padding: 3px 20px;
+      padding: 0.5rem 0.75rem;
       clear: both;
       font-weight: 400;
       line-height: 1.42857143;
@@ -137,7 +138,7 @@ let styles = `
               [innerHTML]="sanitize(active[0].text)"></span>
         <i class="dropdown-toggle pull-right"></i>
         <i class="caret pull-right"></i>
-        <a *ngIf="allowClear && active.length>0" class="btn btn-xs btn-link float-right" style="margin-right: 10px; padding: 0;" (click)="removeClick(active[0], $event)">
+        <a *ngIf="allowClear && active.length>0" class="btn btn-xs btn-link float-right" style="padding: 0;" (click)="removeClick(active[0], $event)">
            <i class="icon-close"></i>
         </a>
       </span>
@@ -466,7 +467,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
       if (this.multiple) {
         this.onChange(this.active.map(d => d.id));
       } else {
-        this.onChange(Number(this.active.map(d => d.id).join()));
+        this.onChange(this.active.map(d => d.id).join());
       }
     }
   }
