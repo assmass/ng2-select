@@ -257,7 +257,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
   }
 
   public writeValue(val: any): void {
-    if (typeof val === 'number') {
+    if (typeof val == 'number' || typeof val == 'string') {
       let present = this._items.filter(d => d.id == val)
       if (present.length >= 1) {
         this.active = present
