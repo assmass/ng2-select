@@ -46,7 +46,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
   }
 
   @Input()
-  public set disabled(value: boolean) {
+  public set disableInput(value: boolean) {
     this._disabled = value
     if (this._disabled === true) {
       this.hideOptions()
